@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script src="../lib/jquery-1.11.0.js"></script>
+<script type="text/javascript">
+
+
+function meus_arrays(){
+  // array vazio
+  var a1 = []; 
+
+  //tamanho do array
+  console.log("tamanho = "+a1.length); 
+
+  //adicionar elementos no array
+  a1.push(1);
+  a1.push('dois'); 
+  a1.push(false);
+  console.log("a1 = "+a1);
+
+  //array inicializado
+  var a2 = [a1, 2, 3, 4, 5, 6, 7]; 
+
+  //acessando elemento do array
+  console.log("a2[0][1] = "+a2[0][1]); 
+
+  //arranca 3 elementos a partir da posicao 1
+  var a3 = a2.splice(1, 3); 
+
+  console.log("a2 = "+a2);
+  console.log("a3 = "+a3);
+}
+
+
+function meus_objetos(){
+  //objeto vazio
+  var o1 = {};
+
+  //adicionar atributo
+  o1.x = 'um';
+
+  //acessar atributo II
+  o1['y'] = 2;
+
+  var letraZ = 'z';
+
+  //acessar atributo II reloaded
+  o1[letraZ] = false;
+
+  console.log('o1.y = '+o1.y);
+
+  //Vc esta logando isso errado
+  console.log('o1 = '+o1);
+  //Agora sim
+  console.log("Veja o1:");
+  console.table([o1]);
+
+  //objeto inicializado com 2 atributos
+  var o2 = {x:1, y:"dois"};
+  //Assim tb funciona
+  var o3 = {"x":3, "y":"quatro"};
+  var array = [o2, o3];
+  console.log("Veja o1 e o3:");
+  console.table(array);
+
+  //e pra deletar
+  delete o1.x;
+  delete o1['y'];
+  console.log("Veja o1 de novo:");
+  console.table([o1]);
+}
+
+function foriiiiin(){
+  var array = ['a', 'b', 'c'];
+
+  console.log('for normal:')
+  for(var i=0; i<array.length; i++){
+    console.log(i+'-->'+array[i]);
+  }
+
+  console.log('for in no array:')
+  for(var i in array){
+    console.log(i+'-->'+array[i]);
+  }
+
+  var pessoa = {
+    nome: 'Tony',
+    idade: 33,
+    gente_boa: true
+  }
+  console.log('for in no objeto:')
+  for(var prop in pessoa){
+    console.log(prop+'-->'+pessoa[prop]);
+  }
+
+}
+
+//nem olha pra ca aqui ainda... :-)
+$(function(){
+  $('[jsfunctioncontent]').each(function(index, el){
+    el.innerHTML = window[el.getAttribute('jsfunctioncontent')]+"";
+  });
+});
+
+
+</script></head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+  <div class="container content"> 
+    <h1>Arrays e objetos</h1>
+    <div class="subtitle">(vamo direto pro console)</div>
+
+    <section>
+
+      <h3>Criar / manipular arrays</h3>
+      <button onclick="meus_arrays()">meus_arrays()</button>
+
+      <pre jsfunctioncontent="meus_arrays"></pre>
+
+      <h3>Criar / manipular objetos</h3>
+      <button onclick="meus_objetos()">meus_objetos()</button>
+
+      <pre jsfunctioncontent="meus_objetos"></pre>
+
+      <h3>for in</h3>
+      <button onclick="foriiiiin()">foriiiiin()</button>
+
+      <pre jsfunctioncontent="foriiiiin"></pre>
+    </section>
+
+    <footer>
+      <h3>Tranquilíssimo, PRÓXIMO!</h3>
+      <ul>
+        <li><a href="003a-wat.html">WAT?</a></li>
+      </ul>
+    </footer>
+  </div>
+
+</body>
+</html>

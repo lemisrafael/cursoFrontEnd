@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script type="text/javascript">
+
+var pessoas = [
+  {nome: 'Tony', idade: 31, gente_boa: true},
+  {nome: 'Félixdanovela', idade: 40, gente_boa: false}
+]
+
+</script>
+</head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+  <div class="container content"> 
+    <h1>Serializando dados com JSON</h1>
+
+    <section>
+
+      <h3> O que é JSON</h3>
+      <p>
+        Um formato para serialização de objetos,
+        que por acaso é javascript válido.
+      </p>
+
+      Seja:
+      <pre>
+  var pessoas = [
+    {nome: 'Tony', idade: 31, gente_boa: true},
+    {nome: 'Félixdanovela', idade: 40, gente_boa: false}
+  ]
+      </pre>
+
+      <h3>JSON.stringify</h3>
+      <button onclick="console.log(JSON.stringify(pessoas))">JSON.stringify(pessoas)</button>
+
+      <h3>stringify bonitinho</h3>
+      <button onclick="console.log(JSON.stringify(pessoas, null, 4))">JSON.stringify(pessoas, null, 4)</button>
+
+      <h3>JSON.parse</h3>
+      <ul>
+        <li>Sem aspas nos atributos não é JSON válido!</li>
+      </ul>
+
+      <h3>Backends que retornam JSON</h3>
+      <ul>
+        <li>
+          <a href="http://freedomsponsors.org">FreedomSponsors</a>: 
+          <a href="http://freedomsponsors.org/core/json/list_issue_cards?sponsoring=true&offset=10&count=5">Olha o JSON</a> 
+        </li>
+        <li>
+          <a href="https://api.github.com/repos/freedomsponsors/www.freedomsponsors.org/issues">Github</a>
+        </li>
+        <li>
+          etc, etc
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+
+      <h3>Beleza, PRÓXIMO!</h3>
+      <ul>
+        <li><a href="005-funcoes.html">Funcoes</a></li>
+      </ul>
+    </footer>
+  </div>
+
+</body>
+</html>

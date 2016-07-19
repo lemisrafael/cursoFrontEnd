@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../lib/angular.js"></script>
+  <script>
+    angular.module("myapp", []);
+    
+    angular.module("myapp").config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+    });
+
+    angular.module("myapp").factory('GiraModel', function(){
+      var m = {
+        angle: 0,
+        vai: vai,
+        volta: volta,
+      };
+
+      function vai(){
+        m.angle += 30;
+        while(m.angle >= 360){
+          m.angle -= 360;
+        }
+      }
+
+      function volta(){
+        m.angle -= 30;
+        while(m.angle < 0){
+          m.angle += 360;
+        }
+      }
+
+      return m;
+    });
+
+    angular.module("myapp").controller('MyCtrl', function ($scope, GiraModel){
+      $scope.m = GiraModel;
+    });
+    
+  </script>
+</head>
+<body ng-app="myapp" ng-controller="MyCtrl">
+<div class="container" style="margin: 15px;">
+  <h1>ng-click</h1>
+  <hr>
+    <hr>
+    <h1>Gira gira gira....</h1>
+    <div>
+        <img style="-webkit-transform: rotate({[{ m.angle }]}deg);" src="../img/tony.jpeg">
+    </div>
+    <button ng-click="m.volta()">&lt;&lt;&lt;</button>
+    <button ng-click="m.vai()">&gt;&gt;&gt;</button>
+
+
+  <h3>Da hora! Que mais?</h3>
+  <ul>
+    <li><a href="008-ngRepeat-filter.html">ng-repeat + filter</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

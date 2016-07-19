@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script src="../lib/jquery-1.11.0.js"></script>
+<script src="007-closure.js"></script>
+</head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+<div class="container content">
+  <h1>Closure</h1>
+
+  <section>
+    <h3>Closure? Que é isso?</h3>
+    <p>
+      Quando vc tem funções aninhadas, a função mais interna<br>
+      tem acesso às variàveis locais da função mais externa.<br>
+      (E isso às vezes dá um nó na cabeça)
+    </p>
+  </section>
+
+  <section>
+    <h3>Exemplinho 1</h3>
+    <button onclick="closure_101()">closure_101()</button>
+    <pre jsfunctioncontent="closure_101"></pre>
+  </section>
+
+  <section>
+    <h3>Parece complicado, mas tem uma vantagem:</h3>
+    <p>
+      Você pode usar o closure de funções pra <strong>armazenar estado</strong>,<br>
+      sem ter que recorrer à variaveis globais.
+    </p>
+
+    <h3>Exemplo: Conta corrente</h3>
+      <button onclick="cc()">cc()</button>
+    <pre jsfunctioncontent="cc"></pre>
+
+    <h3>Outro exemplo: logando erros</h3>
+    <button onclick="dapau()">dapau()</button>
+    <pre jsfunctioncontent="dapau"></pre>
+  </section>
+
+<footer>
+  <h3>Acho que vou ter que voltar nesse assunto depois, mas blz, PRÓXIMO!</h3>
+  <ul>
+    <li><a href="008-prototype.html">Prototype</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

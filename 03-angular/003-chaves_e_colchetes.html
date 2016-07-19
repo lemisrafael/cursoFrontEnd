@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <script src="../lib/angular.js"></script>
+  <script>
+    angular.module("myapp", []);
+    angular.module("myapp").config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+    });
+  </script>
+</head>
+<body ng-app="myapp">
+<div class="container" style="margin: 15px;">
+  <h1><span ng-non-bindable>{[{ Client }]} x {{ server }}</span></h1>
+
+  <div class="alert alert-info">
+    <p>Muitas vezes a sintaxe <code>{{ variavel }}</code> conflita com a sintaxe de <br>
+      substituição de variáveis no backend.</p>
+    <hr>
+
+    <p>--&gt; Solução: Configurar o angular pra usar uma sintaxe diferente.</p>
+    <p>Sugestão: <span ng-non-bindable><code>{[{ variavel }]}</code></span></p>
+  </div>
+
+  <input ng-model="bla">
+  <p>Ó: {[{ bla }]}</p>
+
+
+  <div class="alert alert-info">
+    De agora pra frente nossos exemplos vão sempre usar <span ng-non-bindable>{[{ blau }]}</span> pra vc acostumar.
+  </div>
+
+  <h3>Dica quente, vlw! Que mais?</h3>
+  <ul>
+    <li><a href="005-ngClass_ngShow_ngHide_ngIf.html">ng-class, ng-show, ng-hide, ng-if</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

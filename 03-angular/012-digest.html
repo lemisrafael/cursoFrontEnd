@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../lib/angular.js"></script>
+  <script src="../lib/jquery-1.10.2.min.js"></script>
+  <script src="../js/base.js"></script>
+  <script>
+    angular.module("myapp").controller('MyCtrl', function ($scope){
+
+      $scope.pm = (function(){
+          var DOTS = '....................................................................................................';
+          var PIPES = '||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||';
+          var pm = {
+              progress: 0,
+              progress_bar: progress_bar,
+              tick: tick,
+              start: start
+          };
+
+          return pm;
+
+          function progress_bar(){
+              return '[' + PIPES.substring(0, pm.progress) + DOTS.substring(0, 100 - pm.progress) + ']';
+          }
+
+          function tick(){
+            if(pm.progress < 100){
+              pm.progress++;
+              setTimeout(tick, 50);
+              $scope.$digest();
+            }
+          }
+
+          function start(){
+            setTimeout(tick, 0)
+          }
+      })();
+
+      $scope.im = (function(){
+          var im = {
+              issues: [],
+              loading_issues: false,
+              get_issues: get_issues
+          };
+
+          return im;
+
+          function get_issues(){
+            var url = 'https://api.github.com/repos/freedomsponsors/www.freedomsponsors.org/issues';
+            im.loading_issues = true;
+            $.get(url).success(function(result){
+              im.loading_issues = false;
+              im.issues = result;
+              $scope.$digest();
+            })
+          }
+      })();
+
+    });
+    
+  </script>
+</head>
+
+<body ng-app="myapp" ng-controller="MyCtrl">
+  <div class="container" style="margin: 15px;">
+    <h1>$digest</h1>
+    <hr>
+    <div>
+      <h2>Uma barra de progresso</h2>
+
+      <div>
+        <span>{[{pm.progress_bar()}]}</span>
+        <strong>{[{pm.progress}]}%</strong>
+      </div>
+      <button ng-show="pm.progress < 100" ng-click="pm.start()">Vai!</button>
+      <div ng-show="pm.progress >= 100">
+        Acabou! :-)
+      </div>
+
+      <div class="alert alert-info">
+        Tony, não esquece:
+        <ul>
+          <li>varios cliques</li>
+          <li>tira o digest</li>
+          <li>$timeout</li>
+        </ul>
+      </div>
+      <hr>
+      
+      <h2>Issues do Github</h2>
+      <button ng-click="im.get_issues()">Vai buscar!</button>
+      <img ng-show="im.loading_issues" src="../img/loader.gif">
+
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+        </tr>
+        <tr ng-repeat="issue in im.issues">
+          <td>{[{issue.id}]}</td>
+          <td>{[{issue.title}]}</td>
+        </tr>
+      </table>
+      
+      <div class="alert alert-info">
+        Tony, não esquece:
+        <ul>
+          <li>tira o digest</li>
+          <li>poe o modelo do progresso num serviço</li>
+          <li>$timeout</li>
+          <li>$http</li>
+        </ul>
+      </div>
+      <hr>
+
+      <h3>Nossa, tô ficando cansado de tanta teoria... Cadê a parte prática??</h3>
+      <ul>
+        <li><a href="013-index_event_log.html">Calma que tá acabando: $index, $event e $log</a></li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+
+
+</html>
+
+
+

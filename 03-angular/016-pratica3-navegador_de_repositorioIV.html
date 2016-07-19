@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap_full.css">
+  <link rel="stylesheet" href="../css/github.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../lib/angular.js"></script>
+  <script src="../lib/jquery-1.10.2.min.js"></script>
+  <script>
+    if(!window.Global){
+      window.Global = {};
+    }
+    Global.angular_dependencies = ['githubmodel'];
+  </script>
+  <script src="../js/base.js"></script>
+  <script src="../js/github_api.js"></script>
+  <script src="../js/githubmodel.js"></script>
+  <script>
+    angular.module("myapp").controller('MyCtrl', function ($scope, GithubModel){
+
+      var gm = $scope.gm = GithubModel;
+      $scope.current_file = null;
+      
+      $scope.selectowner = function(user){
+        gm.escolhe_usuario(user);
+        gm.busca_repos_do_usuario();
+      };
+
+      $scope.escolheuorepo = function(repo){
+        gm.reset_repo();
+      };
+
+      $scope.close = function(){
+        $scope.current_file = null;
+      };
+
+      $scope.click_file = function(file){
+        $scope.current_file = file;
+        gm.carrega_arquivo(file);
+      };
+
+      $scope.directory_first = function(node){
+        return (node.type == 'dir' ? '0' : '1') + node.name;
+      }
+
+    });
+    
+  </script>
+</head>
+
+<body ng-app="myapp" ng-controller="MyCtrl">
+  <div class="container" style="margin: 15px;">
+    <h1>Navegador de repositório - passo IV</h1>
+    <hr>
+    <div class="alert alert-info">
+      <p>Encontre um repositório no Github, navegue nos arquivos, e veja o conteúdo.</p>
+    </div>
+      
+    <span>
+        Owner:
+        <span style="position: relative;">
+            <input type="text" ng-model="gm.username_input" 
+              ng-model-options="{ debounce: {'default': 200, 'blur': 0} }" 
+              ng-change="gm.busca_usuarios_pelo_nome()">
+            <img ng-show="gm.buscando_usuarios" src="../img/loader.gif">
+            <div class="pop-options" ng-show="gm.mostra_usuarios_encontrados">
+                <ul>
+                    <li ng-repeat="user in gm.usuarios_encontrados" ng-click="selectowner(user)">
+                      <img class="square32" ng-src="{[{ user.avatar_url }]}">
+                      {[{ user.login }]}
+                    </li>
+                </ul>
+            </div>
+        </span>
+        Repository:
+        <img ng-show="gm.buscando_repositorios" src="../img/loader.gif">
+        <select ng-model="gm.repo" 
+          ng-options="repo.name for repo in gm.repos_encontrados"
+          ng-change="escolheuorepo()"></select>
+    </span>
+      
+    <ul class="tree">
+      <li ng-include="'include/treenodeIV.html'" ng-repeat="node in gm.repo.files"></li>
+    </ul>
+
+    <hr>
+
+    <div class="alert alert-info">
+      Olha algumas técnicas interessantes aqui:
+      <ul>
+        <li>node.loading</li>
+        <li>cache: node.loaded</li>
+      </ul>
+    </div>
+ 
+    <h3>Isso é sensacional! Eu sinto que já sei tudo de Angular!</h3>
+    <ul>
+      <li>Não meu amigo, tem muita coisa bacana ainda pela frente.</li>
+      <li>Mas antes da gente entrar nessas coisas bacanas, vamos recapitular o que a gente aprendeu.</li>
+      <li><a href="017-recapitulando.html">Recapitulando...</a></li>
+    </ul>
+  </div>
+
+
+  <div class="transparent-layer" ng-show="current_file">
+
+    <div class="modal" style="position: relative; top: auto; left: auto; right: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;margin-top: 50px;min-height: 400px;max-height:80%;min-width:600px;">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h3>{[{ current_file.name }]}</h3>
+      </div>
+      <div class="modal-body" style="max-height:80%;">
+        <pre>{[{current_file.file_contents}]}</pre>
+      </div>
+    </div>
+
+  </div>
+
+
+</body>
+
+
+</html>
+
+
+

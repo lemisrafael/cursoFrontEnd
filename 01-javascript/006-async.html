@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script src="../lib/jquery-1.10.2.min.js"></script>
+<script src="006-async.js"></script>
+</head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+<div class="container content"> 
+  <h1>Programação assíncrona</h1>
+
+  <section>
+    <h3>Programação síncrona</h3>
+    <div class="alert alert-info">
+      - jao) Fala Ze? Beleza?<br>
+      - jao) ...<br>
+      - jao) Ô zé, eu tô vendo o "v" azul aqui rapaz...<br>
+      <br>
+      - zé) Faaala jao, foi mal, eu to enrolado aqui, diz ae</br>
+      <br>
+      - jao) Bora no cinema hoje a noite<br>
+      <br>
+      - zé) Nao dah tenho que terminar meu tcc essa semana</br>
+      <br>
+      - jao) Me empresta tua carteirinha de estudante entao?<br>
+      <br>
+      - zé) ("FDP... ") Ahhh blz, pode pegar aqui cara</br>
+    </div>
+  </section>
+
+  <section>
+    <h3>Programação assíncrona</h3>
+    <div class="alert alert-info">
+      - jao) Fala Ze? Tudo em paz? Espero que esteja tudo bem...<br>
+      - jao) Eu vou no cinema hoje a noite ver os vingadores, vamo ae?<br>
+      - jao) Se por acaso vc nao puder me empresta tua carteirinha de estudante aih pls! hehehe<br>
+      <br>
+      - "enquanto isso, jao vai cuidar da sua vida..." <br>
+      <br>
+      - ze) Fala jao. Rapaz to enrolado aqui com o tcc nao vai dar pra mim. <br>
+      - ze) To deixando a carteirinha aqui pra vc no lugar de sempre (segunda gaveta). <br>
+      - ze) Vê se não vem me contar spoiler depois FDP!<br>
+    </div>
+  </section>
+
+  <section>
+    <h3>Exemplinho 1</h3>
+    <button onclick="alert_in_3()">alert_in_3()</button>
+    <pre jsfunctioncontent="helloworld"></pre>
+    <pre jsfunctioncontent="alert_in_3"></pre>
+
+    <h3>Exemplinho 2</h3>
+    <button onclick="alert_in_3_denovo()">alert_in_3_denovo()</button>
+    <pre jsfunctioncontent="alert_in_3_denovo"></pre>
+
+    <h3>Polling</h3>
+    <button onclick="ei_ei_ei()">ei_ei_ei()</button> / 
+    <button onclick="chega()">chega()</button>
+    <pre jsfunctioncontent="ei_ei_ei"></pre>
+    <pre jsfunctioncontent="chega"></pre>
+  </section>
+
+  <section>
+    <h3>APIs assíncronas: callbacks x promessas </h3>
+    <button onclick="soma_assincrona_callback(1, 1, function(result){alert(result)})">soma_assincrona_callback(1, 1, function(result){alert(result)})"</button><br>
+    <pre jsfunctioncontent="soma_assincrona_callback"></pre>
+    <button onclick="soma_assincrona_promessa(1, 1).then(function(result){alert(result)})">soma_assincrona_promessa(1, 1).then(function(result){alert(result)})"</button><br>
+    <pre jsfunctioncontent="soma_assincrona_promessa"></pre>
+    <p>
+      Discussão boa: <a href="http://stackoverflow.com/questions/21141817/why-are-callbacks-more-tightly-coupled-than-promises"> Why are callbacks more tightly couple than promises</a>
+    </p>
+  </section>
+
+  <section>
+    <h3>Um gostinho de Ajax</h3>
+    <button onclick="ajax_sim()">ajax_sim()</button>
+    <pre jsfunctioncontent="ajax_sim"></pre>
+
+    <h3>Ajax errado</h3>
+    <button onclick="ajax_nao()">ajax_nao()</button>
+    <pre jsfunctioncontent="ajax_nao"></pre>
+  </section>
+
+  <footer>
+    <h3>Gostei, PRÓXIMO!</h3>
+    <ul>
+      <li><a href="007-closure.html">Closure</a></li>
+    </ul>
+  </footer>
+</div>
+
+</body>
+</html>

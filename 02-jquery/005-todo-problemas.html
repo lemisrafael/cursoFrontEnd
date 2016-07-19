@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script src="../lib/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+<div class="container content"> 
+  <h1>TODO list com JQuery</h1>
+  <div class="subtitle">(Houston, we have a few problems)</div>
+
+  <section>
+    <h3>Lógica e apresentação misturadas no mesmo lugar</h3>
+    <p>A programação que gera HTML pra página se mistura
+    com os eventos de negócio (adicionar TODOs, marcar como feito, etc).</p>
+    <p>Programar fica mais fácil quando esses dois aspectos estão separados.</p>
+
+    <h3>Difícil de debugar</h3>
+    <p>
+      Um programador que não conhece o código 
+      (digamos, o seu futuro eu daqui 6 meses) 
+      pode ter dificuldades em responder perguntas como:
+    </p>
+    <ul>
+      <li>De onde tá vindo o conteúdo que preenche a tabela #todotable?</li>
+      <li>Qual código tá rodando quando marco a checkbox?</li>
+    </ul>
+
+    <h3>Funcionalidade frágil. Depende da estrutura do DOM</h3>
+    <p>Se eu modificar a estrutura do HTML, posso acabar quebrando<br>
+      funcionalidades.</p>
+
+    <h3>Estado armazenado no DOM.</h3>
+    <p>Se vc quiser calcular quantos % das tarefas estão feitas, o código que faz isso vai estar mais acoplado ao DOM.</p>
+    <p>Vai por mim, é muito melhor programar com o estado das coisas armazenado em OBJETOS JS.</p>
+  </section>
+
+  <footer>
+    <h3>Olhando por esse lado, parece bem ruim mesmo. E agora?</h3>
+    <ul>
+      <li><a href="006-todo-angular.html">Vamos ver como seria com Angular</a></li>
+    </ul>
+  </footer>
+
+</div>
+
+</body>
+</html>
+
+
+
+
+

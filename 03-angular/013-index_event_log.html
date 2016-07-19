@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../lib/angular.js"></script>
+  <script src="../lib/jquery-1.10.2.min.js"></script>
+  <script src="../js/base.js"></script>
+  <script>
+
+    angular.module("myapp").factory('IssuesModel', function($http){
+      var m = {
+        issues: [],
+        loading_issues: false,
+      };
+
+      angular.extend(m, {
+          get_issues: get_issues,
+          sobe: sobe,
+          desce: desce
+      });
+
+      function get_issues(){
+          var url = 'https://api.github.com/repos/freedomsponsors/www.freedomsponsors.org/issues';
+          m.loading_issues = true;
+          $http.get(url).success(function(result){
+            m.loading_issues = false;
+            m.issues = result;
+          });
+      };
+
+      function sobe(indice){
+        _troca(m.issues, indice, indice - 1);
+      };
+
+      function desce(indice){
+        _troca(m.issues, indice, indice + 1);
+      };
+
+      function _troca(array, i, j){
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+      }
+
+      return m;
+    });
+
+    angular.module("myapp").factory('FotosModel', function($log){
+      var fotos = [
+        "../img/phones/motorola-xoom-with-wi-fi.0.jpg", 
+        "../img/phones/motorola-xoom.0.jpg", 
+        "../img/phones/motorola-atrix-4g.0.jpg", 
+        "../img/phones/dell-streak-7.0.jpg", 
+        "../img/phones/samsung-gem.0.jpg", 
+        "../img/phones/dell-venue.0.jpg", 
+        "../img/phones/nexus-s.0.jpg", 
+        "../img/phones/lg-axis.0.jpg", 
+        "../img/phones/samsung-galaxy-tab.0.jpg", 
+        "../img/phones/samsung-showcase-a-galaxy-s-phone.0.jpg", 
+        "../img/phones/droid-2-global-by-motorola.0.jpg", 
+        "../img/phones/droid-pro-by-motorola.0.jpg", 
+        "../img/phones/motorola-bravo-with-motoblur.0.jpg", 
+        "../img/phones/motorola-defy-with-motoblur.0.jpg", 
+        "../img/phones/t-mobile-mytouch-4g.0.jpg", 
+        "../img/phones/samsung-mesmerize-a-galaxy-s-phone.0.jpg", 
+        "../img/phones/sanyo-zio.0.jpg", 
+        "../img/phones/samsung-transform.0.jpg", 
+        "../img/phones/t-mobile-g2.0.jpg", 
+        "../img/phones/motorola-charm-with-motoblur.0.jpg", 
+      ];
+      var indicefoto = 0;
+
+      var m = {
+        foto: fotos[indicefoto],
+        passafoto: passafoto
+      };
+
+      function passafoto(evento){
+        $log.info(evento);
+        if(evento.x > 320){
+          indicefoto++;
+          if(indicefoto >= fotos.length){
+            indicefoto -= fotos.length;
+          }
+        }
+        if(evento.x < 80){
+          indicefoto--;
+          if(indicefoto < 0){
+            indicefoto += fotos.length;
+          }
+        }
+        m.foto = fotos[indicefoto];
+      };
+
+      return m;
+    });
+
+    angular.module("myapp").controller('MyCtrl', function ($scope, IssuesModel, FotosModel){
+      var im = $scope.im = IssuesModel;
+      var fm = $scope.fm = FotosModel;
+      im.get_issues();
+    });
+    
+  </script>
+</head>
+
+<body ng-app="myapp" ng-controller="MyCtrl">
+  <div class="container" style="margin: 15px;">
+    <h1>$index, $event, $log</h1>
+    <hr>
+      
+    <h2>Sobe/Desce</h2>
+    <img ng-show="im.loading_issues" src="../img/loader.gif">
+
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>$index</th>
+        <th>controls</th>
+        <th>Título</th>
+      </tr>
+      <tr ng-repeat="issue in im.issues" ng-class="{selected: issue.is_selected}" 
+      ng-click="issue.is_selected=true">
+        <td>{[{issue.number}]}</td>
+        <td>{[{$index}]}</td>
+        <td>
+          <button ng-show="$index > 0" ng-click="im.sobe($index)">
+            <i class="icon-chevron-up"></i>
+          </button>
+          <button ng-show="$index < im.issues.length - 1" ng-click="im.desce($index)">
+            <i class="icon-chevron-down"></i>
+          </button>
+        </td>
+        <td>{[{issue.title}]}</td>
+      </tr>
+    </table>
+    <hr>
+    <h2>Carrossel</h2>
+    <img ng-src="{[{fm.foto}]}" ng-click="fm.passafoto($event)">
+    <div class="alert alert-info">
+      Tony, não esquece:
+      <ul>
+        <li>angular.extend</li>
+        <li>Mostra o closure em ação</li>
+      </ul>
+    </div>
+    <hr>
+
+    <h3>Blz blz, vamo pra umas coisas mais práticas?!</h3>
+    <ul>
+      <li><a href="014-pratica1-todolist_denovo.html">Blz, vamos ver a TODO-list de novo</a></li>
+    </ul>
+  </div>
+
+</body>
+
+
+</html>
+
+
+

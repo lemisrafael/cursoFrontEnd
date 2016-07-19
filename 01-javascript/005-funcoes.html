@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AngularJS</title>
+<link rel="stylesheet" href="../css/curso.css">
+<script src="../lib/jquery-1.11.0.js"></script>
+<script src="005-funcoes.js"></script>
+</head>
+<body>
+  <div class="head">
+    <span style="font-weight:bold">ng-<span style="color: rgb(125, 25, 51);">masters</span></span>: AngularJS na prática
+  </div>
+<div class="container content"> 
+  <h1>Funções</h1>
+
+  <section>
+    <h3>Parametros</h3>
+    <button onclick="alert(soma(2, 3))">soma(2, 3)</button>
+    <pre jsfunctioncontent="soma"></pre>
+  </section>
+
+  <section>
+    <h3>A variavel especial "arguments"</h3>
+    <button onclick="alert(somatudo(1,2,3,4,5,6,7,8,9))">somatudo(1,2,3,4,5,6,7,8,9)</button>
+    <pre jsfunctioncontent="somatudo"></pre>
+  </section>
+
+  <section>
+    <h3>funcoes aninhadas</h3>
+    <button onclick="n_alerts(1,2,3)">n_alerts(1,2,3)</button>
+    <ul>
+    	<li>São locais!</li>
+    </ul>
+    <pre jsfunctioncontent="n_alerts"></pre>
+  </section>
+
+  <section>
+    <h3>funcoes como variaveis</h3>
+    <button onclick="alert(f2(f1(1,2),f1(3,4)))">f2(f1(1,2),f1(3,4))</button>
+    <pre>
+var f1 = function(x, y){
+  return x * y;
+};
+
+var f2 = soma;
+    </pre>
+  </section>
+
+  <section>
+    <h3>funcoes como argumentos de outras funções</h3>
+    <button onclick="alert(reduce([1,2,3,4,5], f2))">reduce([1,2,3,4,5], f2)</button> / <button onclick="alert(reduce([1,2,3,4,5], f1))">reduce([1,2,3,4,5], f1)</button>
+    <pre jsfunctioncontent="reduce"></pre>
+  </section>
+
+  <footer>
+    <h3>Embaralhou um pouquinho, mas vambora...</h3>
+    <ul>
+      <li><a href="006-async.html">Programacao assíncrona</a></li>
+    </ul>
+  </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS</title>
+  <link rel="stylesheet" href="../css/bootstrap_full.css">
+  <link rel="stylesheet" href="../css/github.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script src="../lib/angular.js"></script>
+  <script src="../lib/jquery-1.10.2.min.js"></script>
+  <script>
+    if(!window.Global){
+      window.Global = {};
+    }
+    Global.angular_dependencies = ['githubmodel'];
+  </script>
+  <script src="../js/base.js"></script>
+  <script src="../js/githubmodel.js"></script>
+
+  <!-- 1 -->
+   <script src="../js/github_api.js"></script>
+
+  <!-- 2 Ajax  -->
+  <!--script src="../js/ajax.js"></script>
+  <script src="../js/github_api2.js"></script-->
+
+  <!-- 3 Ajax mock  -->
+  <!--script src="../js/mock_utils.js"></script>
+  <script src="../js/github_api_mock.js"></script-->
+
+  <script>
+    
+    angular.module('myapp').controller('MyCtrl', function ($scope, GithubModel){
+      var gm = $scope.gm = GithubModel;
+      $scope.selected_issue = null;
+
+      $scope.selectowner = function(user){
+        gm.escolhe_usuario(user);
+        gm.busca_repos_do_usuario();
+      };
+
+      $scope.open = function(issue){
+        $scope.selected_issue = issue;
+        GithubModel.carrega_comentarios_da_issue(issue);
+      }
+
+      $scope.close = function(){
+        $scope.selected_issue = null;
+      };
+
+      $scope.friendly_date = function(date_str){
+        return Global.friendly_date(new Date(date_str));
+      }
+    });
+  </script>
+</head>
+
+<body ng-app="myapp" ng-controller="MyCtrl">
+  <div class="container" style="margin: 15px;">
+    <h1>Navegador de issues</h1>
+    <hr>
+    <div class="alert alert-info">
+      <p>Encontre um repositório no Github, e veja as issues.</p>
+    </div>
+      
+    <span>
+        Owner:
+        <span style="position: relative;">
+            <input type="text" 
+              ng-model="gm.username_input" 
+              ng-model-options="{ updateOn: 'default blur', debounce: {'default': 200, 'blur': 0} }" 
+              ng-change="gm.busca_usuarios_pelo_nome()">
+            <img ng-show="gm.buscando_usuarios" src="../img/loader.gif">
+            <div class="pop-options" ng-show="gm.mostra_usuarios_encontrados">
+                <ul>
+                    <li ng-repeat="user in gm.usuarios_encontrados" ng-click="selectowner(user)">
+                      <img class="square32" ng-src="{[{ user.avatar_url }]}">
+                      {[{ user.login }]}
+                    </li>
+                </ul>
+            </div>
+        </span>
+        Repository:
+        <img ng-show="gm.buscando_repositorios" src="../img/loader.gif">
+        <select ng-model="gm.repo" 
+          ng-options="repo.name for repo in gm.repos_encontrados"
+          ng-change="gm.busca_mais_issues()"></select>
+    </span>
+      
+    <table class="table" style="width: 450px;">
+      <tr>
+        <th style="width:60px;">ID</th>
+        <th style="width:300px;">Título</th>
+        <th>Status</th>
+      </tr>
+      <tr ng-repeat="issue in gm.repo.issues">
+        <td>
+          <i class="icon-exclamation-sign" ng-if="issue.state == 'open'"></i>
+          <i class="icon-ok-circle" ng-if="issue.state == 'closed'"></i>
+          {[{issue.number}]}
+        </td>
+        <td>
+          <a href ng-click="open(issue)">
+            {[{issue.title}]}
+          </a>
+          <span class="pull-right" ng-show="issue.comments">
+            <i class="icon-comment"></i> {[{ issue.comments }]}
+          </span>
+        </td>
+        <td>{[{issue.state}]}</td>
+      </tr>
+    </table>
+    <img ng-show="gm.buscando_issues" src="../img/loader-bar.gif">
+    <button ng-click="gm.busca_mais_issues()" ng-show="gm.repo && !gm.repo.no_more_issues">Mooooore!</button>
+    <div class="alert alert-warn" ng-show="gm.repo && gm.repo.no_more_issues">
+      Acabou!
+    </div>
+    <hr>
+
+    <div class="alert alert-info">
+      Mais coisa importante aqui:
+      <ul>
+        <li>Sistema de módulos!</li>
+        <li>O truque do autocomplete (debounce)</li>
+        <li>Paginação / scroll infinito</li>
+        <li>ng-options, ng-change</li>
+      </ul>
+      E não esquece de mostrar:
+      <ul>
+        <li>O bug do issue.comment_list</li>
+      </ul>
+    </div>
+ 
+    <h3>Da hora!!! Tem mais??</h3>
+    <ul>
+      <li><a href="016-pratica3-navegador_de_repositorioI.html">Teeeeem. Vamo navegar nos códigos do Github :-)</a></li>
+    </ul>
+  </div>
+
+  <div class="transparent-layer" ng-show="selected_issue">
+
+    <div class="modal" style="position: relative; top: auto; left: auto; right: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;margin-top: 50px;min-height: 400px;max-height:80%;min-width:600px;">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h3>{[{ selected_issue.title }]}</h3>
+      </div>
+      <div class="modal-body" style="max-height:80%;">
+
+
+        <div class="timeline-comment-wrapper js-comment-container">
+          <a href="http://github.com/{[{ selected_issue.user.login }]}"><img alt="{[{selected_issue.user.login}]}" class="timeline-comment-avatar" height="48" ng-src="{[{ selected_issue.user.avatar_url }]}" width="48"></a>
+          <div class="timeline-comment timeline-comment-owner-comment">
+            <div class="comment">
+              <div class="timeline-comment-header ">
+                <div class="timeline-comment-header-text">
+                  <strong>
+                    <a href="http://github.com/{[{ selected_issue.user.login }]}" class="author">{[{ selected_issue.user.login }]}</a>
+                  </strong>
+                  commented
+                  <a href class="timestamp"><time title="{[{ selected_issue.created_at }]}">{[{ friendly_date(selected_issue.created_at) }]}</time></a>
+                </div>
+              </div>
+
+              <div class="comment-content">
+                <div class="edit-comment-hide">
+                  <div class="comment-body markdown-body markdown-format js-comment-body">
+                    <p>{[{ selected_issue.body }]}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img src="../img/loader-bar.gif" ng-show="selected_issue.loading_comments">
+        <div class="timeline-comment-wrapper js-comment-container" ng-repeat="comment in selected_issue.comment_list">
+          <a href="http://github.com/{[{ comment.user.login }]}"><img alt="{[{comment.user.login}]}" class="timeline-comment-avatar" height="48" ng-src="{[{ comment.user.avatar_url }]}" width="48"></a>
+          <div class="timeline-comment timeline-comment-owner-comment">
+            <div class="comment">
+              <div class="timeline-comment-header ">
+                <div class="timeline-comment-header-text">
+                  <strong>
+                    <a href="http://github.com/{[{ comment.user.login }]}" class="author">{[{ comment.user.login }]}</a>
+                  </strong>
+                  commented
+                  <a href class="timestamp"><time title="{[{ comment.created_at }]}">{[{ friendly_date(comment.created_at) }]}</time></a>
+                </div>
+              </div>
+
+              <div class="comment-content">
+                <div class="edit-comment-hide">
+                  <div class="comment-body markdown-body markdown-format js-comment-body">
+                    <p>{[{ comment.body }]}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</body>
+
+
+</html>
+
+
+
