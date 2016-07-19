@@ -96,4 +96,4 @@
 * [ng-masters.com](http://ng-masters.com/) ;-)
 * [Angular JS Brasil](http://angularjsbrasil.com.br/)
 * [Angular JS Brasil (Grupo facebook)](https://www.facebook.com/groups/angularjsbrasil/)
-* [ng-newsletter](http://www.ng-newsletter.com/) - Assina, é massa!!!
+* [ng-newsletter](http://www.ng-newsletter.com/) - Assina, é massa!!!# cursoFrontEnd
